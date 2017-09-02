@@ -22,10 +22,26 @@ public class TagDao {
         this.dsl = DSL.using(jooqConfig);
     }
 
+    public boolean TestTag(String tagName, int recieve_id){
+        TagsRecord record = dsl.selectFrom(TAGS).where(TAGS.RECIEVE_ID.eq(recieve_id)).and(TAGS.TAGNAME.eq(tagName)).fetchOne();
+        if(record==null){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public void RemoveTag(String tagName, int recieve_id){
+        System.out.println(dsl.selectFrom(TAGS).where(TAGS.ID.in(recieve_id)).fetch());
+        dsl.delete(TAGS).where(TAGS.RECIEVE_ID.eq(recieve_id)).and(TAGS.TAGNAME.eq(tagName)).execute();
+        System.out.println(dsl.selectFrom(TAGS).where(TAGS.ID.in(recieve_id)).fetch());
+    }
+
     public int insert(String tagName, int recieve_id) {
         TagsRecord tagsRecord = dsl
-                .insertInto(TAGS, TAGS.TAGNAME, TAGS.RECIEVE_ID)
-                .values(tagName, recieve_id)
+                .insertInto(TAGS, TAGS.RECIEVE_ID, TAGS.TAGNAME)
+                .values(recieve_id, tagName)
                 .returning(TAGS.ID, TAGS.RECIEVE_ID, TAGS.TAGNAME)
                 .fetchOne();
 
@@ -39,7 +55,18 @@ public class TagDao {
 
         List <Integer> receiptid = dsl.selectFrom(TAGS).where(TAGS.TAGNAME.eq(tagname)).fetch()
                 .stream().map(x->x.getRecieveId()).collect(Collectors.toList());
-        System.out.println(receiptid);
+//        System.out.println(dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch());
         return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch();
+/*
+        List<TagsRecord> LT = dsl.selectFrom(TAGS).where(TAGS.TAGNAME.eq(tagname)).fetch();
+        Integer[] rp = new Integer[LT.size()];
+
+        for (int i=0;i<LT.size();i++){
+            rp[i]=Integer.parseInt(LT.get(i).get("recieve_id").toString());
+        }
+        return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(rp)).fetch();
+*/
+
+
     }
 }
