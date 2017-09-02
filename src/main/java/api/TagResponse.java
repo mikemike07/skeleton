@@ -26,9 +26,6 @@ public class TagResponse {
     Integer recieve_id;
 
     @JsonProperty
-    BigDecimal value;
-
-    @JsonProperty
     Time created;
 
     public TagResponse(TagsRecord dbRecord) {

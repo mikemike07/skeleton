@@ -1,6 +1,6 @@
 package dao;
 
-import api.ReceiptResponse;
+import api.TagResponse;
 import generated.tables.records.TagsRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -19,16 +19,17 @@ public class TagDao {
         this.dsl = DSL.using(jooqConfig);
     }
 
-    public int insert(String tagname, int recieve_id) {
-        TagsRecord receiptsRecord = dsl
+    public int insert(String tagName, int recieve_id) {
+        TagsRecord tagsRecord = dsl
                 .insertInto(TAGS, TAGS.TAGNAME, TAGS.RECIEVE_ID)
-                .values(tagname, recieve_id)
-                .returning(TAGS.ID)
+                .values(tagName, recieve_id)
+                .returning(TAGS.ID, TAGS.RECIEVE_ID, TAGS.TAGNAME)
                 .fetchOne();
 
-        checkState(receiptsRecord != null && receiptsRecord.getId() != null, "Insert failed");
+        checkState(tagsRecord != null && tagsRecord.getId() != null, "Insert failed");
 
-        return receiptsRecord.getId();
+        return tagsRecord.getId();
+
     }
 
     public List<TagsRecord> getAllReceipts() {

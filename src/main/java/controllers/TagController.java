@@ -2,7 +2,7 @@ package controllers;
 
 import api.CreateReceiptRequest;
 import api.CreateTagRequest;
-import api.ReceiptResponse;
+import api.TagResponse;
 import dao.TagDao;
 import generated.tables.records.TagsRecord;
 
@@ -26,8 +26,8 @@ public class TagController {
 
     @PUT
     @Path("/{tag}")
-    public Integer toggleTag(CreateTagRequest tag, @PathParam("tag") String tagName) {
-        return tag.recieve_id;
+    public void toggleTag(CreateTagRequest tag, @PathParam("tag") String tagName) {
+        tags.insert(tagName, tag.recieve_id);
         // <your code here
     }
 
