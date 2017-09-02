@@ -35,17 +35,6 @@ public class TagController {
     @PUT
     @Path("/{tag}")
     public void toggleTag(int recieve_id, @PathParam("tag") String tagName) {
-
-
-        /*
-        if(dsl.selectFrom(TAGS).where(TAGS.ID.eq(recieve_id)).and(TAGS.TAGNAME.eq(tagName)).fetchOne()==null){
-            tags.insert(tagName, recieve_id);
-        }
-        else{
-            tags.RemoveTag(tagName, recieve_id);
-        }
-        */
-
         if(tags.TestTag(tagName, recieve_id)){
             tags.RemoveTag(tagName, recieve_id);
             System.out.println("Yes");
@@ -53,9 +42,6 @@ public class TagController {
         else{
             tags.insert(tagName, recieve_id);
         }
-
-       // System.out.println(dsl.selectFrom(TAGS).where(TAGS.ID.in(tag.recieve_id)).fetch());
-
     }
 
     @GET

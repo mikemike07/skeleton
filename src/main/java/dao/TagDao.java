@@ -55,18 +55,6 @@ public class TagDao {
 
         List <Integer> receiptid = dsl.selectFrom(TAGS).where(TAGS.TAGNAME.eq(tagname)).fetch()
                 .stream().map(x->x.getRecieveId()).collect(Collectors.toList());
-//        System.out.println(dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch());
         return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch();
-/*
-        List<TagsRecord> LT = dsl.selectFrom(TAGS).where(TAGS.TAGNAME.eq(tagname)).fetch();
-        Integer[] rp = new Integer[LT.size()];
-
-        for (int i=0;i<LT.size();i++){
-            rp[i]=Integer.parseInt(LT.get(i).get("recieve_id").toString());
-        }
-        return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(rp)).fetch();
-*/
-
-
     }
 }
