@@ -7,11 +7,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.hibernate.validator.constraints.NotEmpty;
 
 // For a Java class to be eligible to receive ANY requests
 // it must be annotated with at least @Path
 @Path("")
 public class NetIDController {
+    @NotEmpty
     @GET
     @Path("/netid")
     @Produces(MediaType.TEXT_PLAIN)
