@@ -2,14 +2,17 @@ package dao;
 
 import api.TagResponse;
 import generated.tables.records.TagsRecord;
+import generated.tables.records.ReceiptsRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
+import static generated.Tables.RECEIPTS;
 import static generated.Tables.TAGS;
 
 public class TagDao {
@@ -32,7 +35,11 @@ public class TagDao {
 
     }
 
-    public List<TagsRecord> getAllReceipts() {
-        return dsl.selectFrom(TAGS).fetch();
+    public List<ReceiptsRecord> getSomeTags(String tagname) {
+
+        List <Integer> receiptid = dsl.selectFrom(TAGS).where(TAGS.TAGNAME.eq(tagname)).fetch()
+                .stream().map(x->x.getRecieveId()).collect(Collectors.toList());
+        System.out.println(receiptid);
+        return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch();
     }
 }
