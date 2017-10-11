@@ -51,4 +51,11 @@ public class TagController {
         return tagRecords.stream().map(ReceiptResponse::new).collect(Collectors.toList());
     }
 
+//    @GET
+//    @Path("/{tag}")
+//    public List<TagResponse> getAllTags(){
+//        List<TagsRecord> tagRecords = tags.getAllTags();
+//        return tagRecords.stream().map(TagResponse::new).collect(toList());
+//    }
+
 }

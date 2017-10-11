@@ -57,4 +57,10 @@ public class TagDao {
                 .stream().map(x->x.getRecieveId()).collect(Collectors.toList());
         return dsl.selectFrom(RECEIPTS).where(RECEIPTS.ID.in(receiptid)).fetch();
     }
+
+//    public List<TagsRecord> getAllTags(){
+//        return dsl.selectFrom(TAGS).fetch();
+//    }
+
+
 }
