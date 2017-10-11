@@ -15,22 +15,22 @@ import java.sql.Time;
  * Any properties that you want exposed when this class is translated to JSON must be
  * annotated with {@link JsonProperty}
  */
-public class ReceiptResponse {
+public class TagResponse {
     @JsonProperty
     Integer id;
 
     @JsonProperty
-    String merchantName;
+    String tagname;
 
     @JsonProperty
-    BigDecimal value;
+    Integer recieve_id;
 
     @JsonProperty
     Time created;
 
-    public ReceiptResponse(ReceiptsRecord dbRecord) {
-        this.merchantName = dbRecord.getMerchant();
-        this.value = dbRecord.getAmount();
+    public TagResponse(TagsRecord dbRecord) {
+        this.tagname = dbRecord.getTagname();
+        this.recieve_id = dbRecord.getRecieveId();
         this.created = dbRecord.getUploaded();
         this.id = dbRecord.getId();
     }
